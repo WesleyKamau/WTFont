@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>What The Font?</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            max-height: 100vh;
+        }
+
+        #outputDiv {
+            text-align: center;
+            word-wrap: break-word;
+            width: 80%; /* Adjust as needed */
+            font-size: 75px; /* Initial font size */
+            white-space: normal; /* Allow child divs to wrap */
+            max-height: calc(100vh - 80px - 2*10px); /* Subtract the padding from the max-height */
+            padding: 10px; /* Add padding */
+
+            margin-bottom: 20px; /* Add margin to the bottom */
+        }
+
+        .font-div {
+            display: inline-block;
+            margin-right: 2px; /* Adjust spacing between characters if needed */
+        }
+
+        header {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px 0;
+            z-index: 1000;
+        }
+
+        #headerTitle {
+            font-size: 2em;
+            color: #333;
+        }
+
+        pre {
+            margin: none;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <h1 id="headerTitle">What The Font?</h1>
+    </header>
+    <pre id="outputDiv"></pre>
+
+    <script>
+        document.addEventListener('keydown', function (event) {
+            var outputDiv = document.getElementById('outputDiv');
+            var header = document.getElementById('headerTitle');
+            var body = document.body;
+            var character = event.key;
+
+            // Ignore function keys, but allow Backspace, Enter, and Space
+            if (event.key.length > 1 && !['Backspace', 'Enter', ' '].includes(event.key)) {
+                return;
+            }
+
+            // Handle backspace
+            if (event.key === 'Backspace') {
+                outputDiv.lastChild && outputDiv.removeChild(outputDiv.lastChild);
+            } 
+            // Handle enter
+            else if (event.key === 'Enter') {
+                var br = document.createElement('br');
+                outputDiv.appendChild(br);
+            } 
+            // Handle normal characters and space
+            else {
+                var div = document.createElement('div');
+                div.style.fontFamily = getRandomFont();
+                div.style.display = 'inline-block'; // Ensure the divs are inline-block
+
+                // If space key is pressed, add a non-breaking space
+                if (character === ' ') {
+                    div.innerHTML = '&nbsp;'; // Use innerHTML to parse the non-breaking space
+                } else {
+                    div.textContent = character;
+                }
+
+                outputDiv.appendChild(div);
+
+            }
+
+        // Decrease font size if content overflows the body height
+        while (outputDiv.scrollHeight > (body.clientHeight - (header.offsetHeight*2) - 170)) { // Subtract the padding from the max-height
+            var fontSize = parseFloat(window.getComputedStyle(outputDiv, null).getPropertyValue('font-size'));
+            outputDiv.style.fontSize = (fontSize - 1) + 'px'; // Decrease font size by 1px
+        }
+        });
+
+        function getRandomFont() {
+            // Replace this function with your logic to generate different font styles
+            var fonts = [
+                'Arial', 'Arial Black', 'Arial Narrow', 'Arial Rounded MT Bold', 'Book Antiqua', 'Bookman Old Style',
+                'Bradley Hand ITC', 'Century Gothic', 'Comic Sans MS', 'Courier', 'Courier New', 'Georgia',
+                'Helvetica', 'Impact', 'Lucida Console', 'Lucida Grande', 'Lucida Sans Unicode', 'Marker Felt',
+                'Palatino', 'Tahoma', 'Times', 'Times New Roman', 'Trebuchet MS', 'Verdana', 'American Typewriter',
+                'Andale Mono', 'Arial Hebrew', 'Arial Rounded MT Bold', 'Baskerville', 'Big Caslon', 'Brush Script MT',
+                'Chalkboard', 'Chalkduster', 'Charcoal', 'Charcoal CY', 'Chicago', 'Cochin', 'Comic Sans MS',
+                'Copperplate', 'Copperplate Gothic', 'Copperplate Gothic Bold', 'Copperplate Light', 'Corsiva Hebrew',
+                'Courier', 'Courier New', 'Didot', 'Futura', 'Gadget', 'Geneva', 'Georgia', 'Gill Sans',
+                'Gill Sans Light', 'Gill Sans Ultra Bold', 'Helvetica', 'Helvetica Neue', 'Hoefler Text',
+                'Impact', 'Lucida Grande', 'Monaco', 'Optima', 'Palatino', 'Papyrus', 'Skia', 'Symbol',
+                'Tahoma', 'Times', 'Times New Roman', 'Trebuchet MS', 'Verdana', 'Zapf Chancery', 'Zapf Dingbats'
+            ];
+            var randomFontIndex = Math.floor(Math.random() * fonts.length);
+            return fonts[randomFontIndex];
+        }
+
+        // Function to change the font of each character in the header
+        function changeHeaderFont() {
+            var headerTitle = document.getElementById('headerTitle');
+            var text = headerTitle.textContent;
+            headerTitle.innerHTML = '';
+
+            for (var i = 0; i < text.length; i++) {
+                var span = document.createElement('span');
+                span.textContent = text[i];
+                span.style.fontFamily = getRandomFont();
+                headerTitle.appendChild(span);
+            }
+        }
+
+        // Call the function every second
+        setInterval(changeHeaderFont, 100);
+    </script>
+</body>
+</html>
