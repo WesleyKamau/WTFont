@@ -61,11 +61,11 @@
     <pre id="outputDiv"></pre>
 
     <script>
+        
+        
+        
         document.addEventListener('keydown', function (event) {
-            var outputDiv = document.getElementById('outputDiv');
-            var header = document.getElementById('headerTitle');
-            var body = document.body;
-            var character = event.key;
+            let character = event.key;
 
             // Ignore function keys, but allow Backspace, Enter, and Space
             if (event.key.length > 1 && !['Backspace', 'Enter', ' '].includes(event.key)) {
@@ -104,6 +104,7 @@
             outputDiv.style.fontSize = (fontSize - 1) + 'px'; // Decrease font size by 1px
         }
         });
+        
 
         function getRandomFont() {
             // Replace this function with your logic to generate different font styles
