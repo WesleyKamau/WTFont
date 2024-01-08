@@ -9,6 +9,9 @@
             inputElement.style.visibility = 'visible'; // unhide the input
             inputElement.focus(); // focus on it so keyboard pops
             // inputElement.style.visibility = 'hidden'; // hide it again
+            setTimeout(function(){
+                inputElement.style.visibility = 'hidden';
+            }, 1000);
         });
     </script>
 </body>
