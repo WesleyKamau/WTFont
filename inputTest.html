@@ -2,15 +2,15 @@
 <html lang="en">
 <body>
     <button id="openKeyboard">Open Keyboard</button>
-    <input id="hiddenInput" style="visibility: hidden;">
+    <input id="hiddenInput" style="opacity: 0; position: absolute;">
     <script>
         document.getElementById('openKeyboard').addEventListener('click', function(){
             var inputElement = document.getElementById('hiddenInput');
-            inputElement.style.visibility = 'visible'; // unhide the input
+            inputElement.style.opacity = '1'; // unhide the input
             inputElement.focus(); // focus on it so keyboard pops
-            // inputElement.style.visibility = 'hidden'; // hide it again
+            // inputElement.style.opacity = '0'; // hide it again
             setTimeout(function(){
-                inputElement.style.visibility = 'hidden';
+                inputElement.style.opacity = '0';
             }, 1000);
         });
     </script>
