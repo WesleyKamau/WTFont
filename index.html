@@ -99,7 +99,7 @@
             }
 
         // Decrease font size if content overflows the body height
-        while (outputDiv.scrollHeight > (body.clientHeight - (header.offsetHeight*2) - 170)) { // Subtract the padding from the max-height
+        while (outputDiv.scrollHeight > (document.body.clientHeight - (header.offsetHeight*2) - 170)) { // Subtract the padding from the max-height
             var fontSize = parseFloat(window.getComputedStyle(outputDiv, null).getPropertyValue('font-size'));
             outputDiv.style.fontSize = (fontSize - 1) + 'px'; // Decrease font size by 1px
         }
